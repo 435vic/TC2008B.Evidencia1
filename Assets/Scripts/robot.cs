@@ -76,18 +76,25 @@ public class robot : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.M)){
             buildMessage();
         }
-
-        if(Vector3.Distance(transform.position, target) == 0){
-            move = false;
-            updateKnowledge();
-            
-        }
     }
 
     public IEnumerator Delay()
     {        
         yield return new WaitForSeconds(1);
         getMessage();    
+    }
+    public IEnumerator TurnDelay()
+    {        
+        yield return new WaitForSeconds(0.1f);
+        updateKnowledge();    
+    }
+
+    public IEnumerator Stop(){
+        while(Vector3.Distance(transform.position, target) != 0){
+            yield return Time.deltaTime;
+        }
+        move = false;
+        updateKnowledge();
     }
 
     public void setUpSocket(){
@@ -96,8 +103,8 @@ public class robot : MonoBehaviour
     }
 
     void getMessage(){
-        bytes = stream.Read(receivedBuffer, 0, receivedBuffer.Length);
-        responseData = Encoding.ASCII.GetString(receivedBuffer, 0, bytes);
+        //bytes = stream.Read(receivedBuffer, 0, receivedBuffer.Length);
+        //responseData = Encoding.ASCII.GetString(receivedBuffer, 0, bytes);
         Debug.Log("Recibido: " + responseData);
     }
 
@@ -109,7 +116,7 @@ public class robot : MonoBehaviour
 
         Debug.Log(message);
         byte[] dataToSend = Encoding.ASCII.GetBytes(message);
-        stream.Write(dataToSend, 0, dataToSend.Length);
+        //stream.Write(dataToSend, 0, dataToSend.Length);
     }
 
     void updateKnowledge(){
@@ -134,12 +141,15 @@ public class robot : MonoBehaviour
         carrying = false;
         grabber.SetActive(false);
         frontHB.addBox();
-        updateKnowledge();
+        frontHBCheck = frontHB.getCheck();
+        boxAmount = frontHB.getAmountBoxes();
+        StartCoroutine(TurnDelay());
     }
     void advance(){
         if(!move){
             move = true;
             target = transform.position + transform.forward;
+            StartCoroutine(Stop());
         }
     }
 
@@ -150,7 +160,7 @@ public class robot : MonoBehaviour
         } else {
             facingDir--;
         }
-        updateKnowledge();
+        StartCoroutine(TurnDelay());
     }
 
     void turnRight(){
@@ -161,7 +171,7 @@ public class robot : MonoBehaviour
         } else {
             facingDir++;
         }
-        updateKnowledge();
+        StartCoroutine(TurnDelay());
     }
 
     void turnBack(){
@@ -171,6 +181,6 @@ public class robot : MonoBehaviour
         } else {
             facingDir+= 2;
         }
-        updateKnowledge();
+        StartCoroutine(TurnDelay());
     }
 }

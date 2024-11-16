@@ -30,6 +30,7 @@ public class collisionCheck : MonoBehaviour
 
     private void OnTriggerExit(Collider other) {
         Colided = "E";
+        front = null;
         over = null;
         boxAmount = 0;
     }
@@ -55,8 +56,6 @@ public class collisionCheck : MonoBehaviour
 
             float xPos = this.transform.position.x;
             float zPos = this.transform.position.z;
-            Debug.Log(xPos);
-            Debug.Log(zPos);
             Instantiate(
                 objectToSpawn,
                 new Vector3(xPos, 0.5f, zPos),
