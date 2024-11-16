@@ -105,6 +105,15 @@ public class robot : MonoBehaviour
     void getMessage(){
         //bytes = stream.Read(receivedBuffer, 0, receivedBuffer.Length);
         //responseData = Encoding.ASCII.GetString(receivedBuffer, 0, bytes);
+        /*if (responseData == "0"){
+            advance();
+        } else if (responseData == "1"){
+            turnLeft();
+        } else if (responseData == "2"){
+            grab();
+        } else if (responseData == "3"){
+            drop();
+        } */
         Debug.Log("Recibido: " + responseData);
     }
 
