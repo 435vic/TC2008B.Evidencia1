@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class boxPile : MonoBehaviour
 {
+    public GameObject[] boxes;
     public int amount;
     // Start is called before the first frame update
     void Start()
@@ -13,6 +14,7 @@ public class boxPile : MonoBehaviour
 
     public void addBox(){
         amount++;
+        boxes[amount-2].SetActive(true);
     }
     public int getBoxes(){
         return amount;
