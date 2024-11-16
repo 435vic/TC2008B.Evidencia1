@@ -36,6 +36,8 @@ public class gameManager : MonoBehaviour
         for (int i = 0; i < robots.Length; i++){
             robots[i].transform.position = spawns[positions[i]].transform.position;
             robots[i].transform.rotation = spawns[positions[i]].transform.rotation;
+            robots[i].socket += i;
+            robots[i].setUpSocket();
         }
     }
 
@@ -46,8 +48,8 @@ public class gameManager : MonoBehaviour
         int counter = 0;
         Quaternion defRot = new Quaternion();
         while(counter < boxNumber && numOfRow < 9){
-            zPos += Random.Range(1, 4);
-            if(zPos <= 6.5){
+            zPos += Random.Range(2, 5);
+            if(zPos <= 9.5){
                 counter++;
                 Instantiate(
                     spawnRef,

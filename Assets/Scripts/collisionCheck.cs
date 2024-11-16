@@ -46,6 +46,7 @@ public class collisionCheck : MonoBehaviour
         if(over.CompareTag("Box")){
             Destroy(over);
             Colided = "E";
+            boxAmount = 0;
         }
     }
 

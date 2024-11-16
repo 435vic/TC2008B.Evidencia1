@@ -279,6 +279,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7309249195966960482, guid: 0c90986efd6c24c4aa32f97107474533, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -443,7 +447,7 @@ Transform:
   m_GameObject: {fileID: 980070833}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 9.5, y: 0.5, z: 2.5}
+  m_LocalPosition: {x: 9.5, y: 0.5, z: 3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -500,6 +504,10 @@ PrefabInstance:
     - target: {fileID: 7309249195966960482, guid: 0c90986efd6c24c4aa32f97107474533, type: 3}
       propertyPath: m_Name
       value: Robot (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309249195966960482, guid: 0c90986efd6c24c4aa32f97107474533, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -777,7 +785,7 @@ Transform:
   m_GameObject: {fileID: 1417883096}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 2, z: 7.1}
+  m_LocalPosition: {x: 5, y: 2, z: 10.1}
   m_LocalScale: {x: 10, y: 4, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -808,7 +816,7 @@ Transform:
   m_GameObject: {fileID: 1517296834}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 9.5, y: 0.5, z: 5.5}
+  m_LocalPosition: {x: 9.5, y: 0.5, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -999,8 +1007,8 @@ Transform:
   m_GameObject: {fileID: 1622269630}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.1, y: 2, z: 3.5}
-  m_LocalScale: {x: 7, y: 4, z: 0.2}
+  m_LocalPosition: {x: -0.1, y: 2, z: 5}
+  m_LocalScale: {x: 10, y: 4, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1143,8 +1151,8 @@ Transform:
   m_GameObject: {fileID: 1697713019}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.1, y: 2, z: 3.5}
-  m_LocalScale: {x: 7, y: 4, z: 0.2}
+  m_LocalPosition: {x: 10.1, y: 2, z: 5}
+  m_LocalScale: {x: 10, y: 4, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1211,6 +1219,10 @@ PrefabInstance:
     - target: {fileID: 7309249195966960482, guid: 0c90986efd6c24c4aa32f97107474533, type: 3}
       propertyPath: m_Name
       value: Robot (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309249195966960482, guid: 0c90986efd6c24c4aa32f97107474533, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1379,8 +1391,8 @@ Transform:
   m_GameObject: {fileID: 2057789700}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 3.5}
-  m_LocalScale: {x: 1, y: 1, z: 0.7}
+  m_LocalPosition: {x: 5, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1436,6 +1448,10 @@ PrefabInstance:
     - target: {fileID: 7309249195966960482, guid: 0c90986efd6c24c4aa32f97107474533, type: 3}
       propertyPath: m_Name
       value: Robot (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309249195966960482, guid: 0c90986efd6c24c4aa32f97107474533, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

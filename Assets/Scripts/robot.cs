@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Text;
 using UnityEngine;
+
 
 public class robot : MonoBehaviour
 {
+    public int socket = 65432;
     public float speed = 1.0f;
     public bool move = false;
-
     public int facingDir = 1;
-
-    int boxAmount = 0;
+    string[] directions = new string[4]{"n", "e", "s", "w"};
+    private Vector3 target;
 
     public GameObject grabber;
 
@@ -21,14 +24,22 @@ public class robot : MonoBehaviour
     public string rightHBCheck; 
     public collisionCheck leftHB;
     public string leftHBCheck;
-    bool carrying = false;
+    public int boxAmount = 0;
 
-    private Vector3 target;
+    public bool carrying = false;
+
+    string message;
+    TcpClient client;
+    NetworkStream stream;
+    byte[] receivedBuffer = new byte[1024];
+    int bytes;
+    string responseData;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        speed = Random.Range(1, 5);
     }
 
     // Update is called once per frame
@@ -62,32 +73,74 @@ public class robot : MonoBehaviour
             drop();
         }
 
-        if(Vector3.Distance(transform.position, target) == 0){
-            move = false;
+        if(Input.GetKeyDown(KeyCode.M)){
+            buildMessage();
         }
 
+        if(Vector3.Distance(transform.position, target) == 0){
+            move = false;
+            updateKnowledge();
+            
+        }
+    }
+
+    public IEnumerator Delay()
+    {        
+        yield return new WaitForSeconds(1);
+        getMessage();    
+    }
+
+    public void setUpSocket(){
+        //client = new TcpClient("localhost", socket);
+        //stream = client.GetStream();
+    }
+
+    void getMessage(){
+        bytes = stream.Read(receivedBuffer, 0, receivedBuffer.Length);
+        responseData = Encoding.ASCII.GetString(receivedBuffer, 0, bytes);
+        Debug.Log("Recibido: " + responseData);
+    }
+
+    void buildMessage(){
+        message = directions[facingDir-1] + " " +
+        carrying + " " +
+        leftHBCheck + " " + frontHBCheck + " " + frontRightHBCheck + " " + rightHBCheck + " " +
+        boxAmount;
+
+        Debug.Log(message);
+        byte[] dataToSend = Encoding.ASCII.GetBytes(message);
+        stream.Write(dataToSend, 0, dataToSend.Length);
+    }
+
+    void updateKnowledge(){
         frontHBCheck = frontHB.getCheck();
         boxAmount = frontHB.getAmountBoxes();
         frontRightHBCheck = frontRightHB.getCheck();
         rightHBCheck = rightHB.getCheck();
         leftHBCheck = leftHB.getCheck();
-        
+        buildMessage();
+        Delay();
     }
 
     void grab(){
         frontHB.pickUp();
         carrying = true;
         grabber.SetActive(true);
+        boxAmount = 0;
+        updateKnowledge();
     }
 
     void drop(){
         carrying = false;
         grabber.SetActive(false);
         frontHB.addBox();
+        updateKnowledge();
     }
     void advance(){
-        move = true;
-        target = transform.position + transform.forward;
+        if(!move){
+            move = true;
+            target = transform.position + transform.forward;
+        }
     }
 
     void turnLeft(){
@@ -97,6 +150,7 @@ public class robot : MonoBehaviour
         } else {
             facingDir--;
         }
+        updateKnowledge();
     }
 
     void turnRight(){
@@ -107,6 +161,7 @@ public class robot : MonoBehaviour
         } else {
             facingDir++;
         }
+        updateKnowledge();
     }
 
     void turnBack(){
@@ -116,5 +171,6 @@ public class robot : MonoBehaviour
         } else {
             facingDir+= 2;
         }
+        updateKnowledge();
     }
 }
