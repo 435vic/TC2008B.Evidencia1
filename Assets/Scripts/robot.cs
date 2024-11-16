@@ -7,6 +7,10 @@ public class robot : MonoBehaviour
     public float speed = 1.0f;
     public bool move = false;
 
+    public int facingDir = 1;
+
+    int boxAmount = 0;
+
     public GameObject grabber;
 
     public collisionCheck frontHB;
@@ -63,6 +67,7 @@ public class robot : MonoBehaviour
         }
 
         frontHBCheck = frontHB.getCheck();
+        boxAmount = frontHB.getAmountBoxes();
         frontRightHBCheck = frontRightHB.getCheck();
         rightHBCheck = rightHB.getCheck();
         leftHBCheck = leftHB.getCheck();
@@ -78,6 +83,7 @@ public class robot : MonoBehaviour
     void drop(){
         carrying = false;
         grabber.SetActive(false);
+        frontHB.addBox();
     }
     void advance(){
         move = true;
@@ -86,13 +92,29 @@ public class robot : MonoBehaviour
 
     void turnLeft(){
         transform.Rotate(0, -90, 0, Space.Self);
+        if(facingDir == 1){
+            facingDir = 4;
+        } else {
+            facingDir--;
+        }
     }
 
     void turnRight(){
         transform.Rotate(0, 90, 0, Space.Self);
+
+        if(facingDir == 4){
+            facingDir = 1;
+        } else {
+            facingDir++;
+        }
     }
 
     void turnBack(){
         transform.Rotate(0, 180, 0, Space.Self);
+        if(facingDir > 2){
+            facingDir -= 2;
+        } else {
+            facingDir+= 2;
+        }
     }
 }

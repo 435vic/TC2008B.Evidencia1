@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class boxPile : MonoBehaviour
 {
-    int amount;
+    public int amount;
     // Start is called before the first frame update
     void Start()
     {
-        amount = 0;
+        amount = 1;
     }
 
     public void addBox(){

@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class collisionCheck : MonoBehaviour
 {
     public string Colided;
     public GameObject over;
-
+    public boxPile front;
+    public GameObject objectToSpawn;
+    public int boxAmount;
+    
     void Start(){
         Colided = "E";
     }
@@ -14,6 +18,8 @@ public class collisionCheck : MonoBehaviour
         if(other.CompareTag("Box")){
             Colided = "B";
             over = other.gameObject;
+            front = over.GetComponent<boxPile>();
+            boxAmount = front.getBoxes();
         } else if (other.CompareTag("Robot")){
             Colided = "R";
         } else if (other.CompareTag("Wall")){
@@ -25,15 +31,39 @@ public class collisionCheck : MonoBehaviour
     private void OnTriggerExit(Collider other) {
         Colided = "E";
         over = null;
+        boxAmount = 0;
     }
 
     public string getCheck(){
         return Colided;
     }
+
+    public int getAmountBoxes(){
+        return boxAmount;
+    }
     
     public void pickUp(){
         if(over.CompareTag("Box")){
             Destroy(over);
+            Colided = "E";
+        }
+    }
+
+    public void addBox(){
+        if(Colided == "E"){
+
+            float xPos = this.transform.position.x;
+            float zPos = this.transform.position.z;
+            Debug.Log(xPos);
+            Debug.Log(zPos);
+            Instantiate(
+                objectToSpawn,
+                new Vector3(xPos, 0.5f, zPos),
+                new Quaternion()
+            );
+        } else if (Colided == "B" && boxAmount < 5){
+            boxAmount++;
+            front.addBox();
         }
     }
 }
