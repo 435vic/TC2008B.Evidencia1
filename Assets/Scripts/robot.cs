@@ -13,7 +13,7 @@ public class robot : MonoBehaviour
     public int facingDir = 1;
     string[] directions = new string[4]{"n", "e", "s", "w"};
     private Vector3 target;
-
+    public GameObject siren;
     public GameObject grabber;
 
     public collisionCheck frontHB;
@@ -40,6 +40,7 @@ public class robot : MonoBehaviour
     void Start()
     {
         speed = Random.Range(1, 5);
+        StartCoroutine(Siren());
     }
 
     // Update is called once per frame
@@ -78,6 +79,13 @@ public class robot : MonoBehaviour
         }
     }
 
+
+    public IEnumerator Siren(){
+        while(true){
+            siren.SetActive(!siren.activeSelf);
+            yield return new WaitForSeconds(1);
+        }
+    }
     public IEnumerator Delay()
     {        
         yield return new WaitForSeconds(1);
