@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class robot : MonoBehaviour
 {
-    public int socket = 65432;
+    public int id = 0;
     public float speed = 1.0f;
     public bool move = false;
     public int facingDir = 1;
@@ -29,12 +29,6 @@ public class robot : MonoBehaviour
     public bool carrying = false;
 
     string message;
-    TcpClient client;
-    NetworkStream stream;
-    byte[] receivedBuffer = new byte[1024];
-    int bytes;
-    string responseData;
-
 
     // Start is called before the first frame update
     void Start()
@@ -86,14 +80,15 @@ public class robot : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
-    public IEnumerator Delay()
-    {        
-        yield return new WaitForSeconds(1);
-        getMessage();    
-    }
+
     public IEnumerator TurnDelay()
     {        
         yield return new WaitForSeconds(0.1f);
+        updateKnowledge();    
+    }
+    public IEnumerator Wait()
+    {        
+        yield return new WaitForSeconds(1);
         updateKnowledge();    
     }
 
@@ -105,23 +100,22 @@ public class robot : MonoBehaviour
         updateKnowledge();
     }
 
-    public void setUpSocket(){
-        //client = new TcpClient("localhost", socket);
-        //stream = client.GetStream();
-    }
-
-    void getMessage(){
-        //bytes = stream.Read(receivedBuffer, 0, receivedBuffer.Length);
-        //responseData = Encoding.ASCII.GetString(receivedBuffer, 0, bytes);
-        /*if (responseData == "0"){
+    public void getMessage(string responseData){
+        if (responseData == "F"){
             advance();
-        } else if (responseData == "1"){
+        } else if (responseData == "L"){
             turnLeft();
-        } else if (responseData == "2"){
+        } else if (responseData == "R"){
+            turnRight();
+        } else if (responseData == "B"){
+            turnBack();
+        } else if (responseData == "G"){
             grab();
-        } else if (responseData == "3"){
+        } else if (responseData == "D"){
             drop();
-        } */
+        } else if (responseData == "W"){
+            StartCoroutine(Wait());
+        }
         Debug.Log("Recibido: " + responseData);
     }
 
@@ -130,10 +124,7 @@ public class robot : MonoBehaviour
         carrying + " " +
         leftHBCheck + " " + frontHBCheck + " " + frontRightHBCheck + " " + rightHBCheck + " " +
         boxAmount;
-
-        Debug.Log(message);
-        byte[] dataToSend = Encoding.ASCII.GetBytes(message);
-        //stream.Write(dataToSend, 0, dataToSend.Length);
+        gameManager.Instance.answerFromRobot(message, id);
     }
 
     void updateKnowledge(){
@@ -143,7 +134,6 @@ public class robot : MonoBehaviour
         rightHBCheck = rightHB.getCheck();
         leftHBCheck = leftHB.getCheck();
         buildMessage();
-        Delay();
     }
 
     void grab(){
