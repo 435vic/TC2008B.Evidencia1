@@ -48,11 +48,19 @@ public class gameManager : MonoBehaviour
             counter = 0;
             sendToPython();
         }
-        int bytes = stream.Read(receivedBuffer, 0, receivedBuffer.Length);
-        string responseData = Encoding.ASCII.GetString(receivedBuffer, 0, bytes);
-        // Fill the robotMessages array with the responseData
-        //controlRobots(); 
-        Debug.Log("Recibido: " + responseData);
+        if(stream.DataAvailable){
+            int bytes = stream.Read(receivedBuffer, 0, receivedBuffer.Length);
+            string responseData = Encoding.ASCII.GetString(receivedBuffer, 0, bytes);
+            Debug.Log("Recibido: " + responseData);
+            // Fill the robotMessages array with the responseData
+            for (int i = 0; i < robots.Length; i++){
+                pythonInstruction[i] = responseData[i*2].ToString();
+            }
+            controlRobots();  
+        }
+        
+        
+        
     }
 
     void ShufflePositions(){
@@ -112,6 +120,9 @@ public class gameManager : MonoBehaviour
     void sendToPython(){
         // use the robotMessages array to send the message to python
         string fullMessage = ""; // Enter message here
+        for (int i = 0; i < robots.Length; i++){
+            fullMessage += (i+1) + " " + robotMessages[i] +";";
+        }
         byte[] dataToSend = Encoding.ASCII.GetBytes(fullMessage);
         stream.Write(dataToSend, 0, dataToSend.Length);
     }
