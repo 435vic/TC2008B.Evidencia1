@@ -46,6 +46,7 @@ public class gameManager : MonoBehaviour
     }
 
     void Update(){
+        return;
         if(counter == 5){
             counter = 0;
             sendToPython();
