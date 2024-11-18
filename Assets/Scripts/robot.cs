@@ -127,7 +127,7 @@ public class robot : MonoBehaviour
         gameManager.Instance.answerFromRobot(message, id);
     }
 
-    void updateKnowledge(){
+    public void updateKnowledge(){
         frontHBCheck = frontHB.getCheck();
         boxAmount = frontHB.getAmountBoxes();
         frontRightHBCheck = frontRightHB.getCheck();

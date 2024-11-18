@@ -38,9 +38,11 @@ public class gameManager : MonoBehaviour
         ShufflePositions();
         spawnRobots();
         spawnBoxes();
-
+        for (int i = 0; i < robots.Length; i++){
+            robots[i].updateKnowledge();
+        }
         TcpClient client = new TcpClient("localhost", 65432);
-        stream = client.GetStream();   
+        stream = client.GetStream();
     }
 
     void Update(){
